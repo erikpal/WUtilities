@@ -12,3 +12,6 @@ parseIqyUrl(path)
 \description{
 Live Excel IQY Parser
 }
+\examples{
+url <- parseIqyUrl("../path/to/query.iqy")
+}

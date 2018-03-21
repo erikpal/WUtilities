@@ -5,7 +5,7 @@
 #' @return
 #' @export
 #'
-#' @examples
+#' @examples url <- parseIqyUrl("../path/to/query.iqy")
 parseIqyUrl <- function(path) {
         require(httr)
         q <- readLines(path)

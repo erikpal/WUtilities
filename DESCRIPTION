@@ -2,9 +2,11 @@ Package: WUtilities
 Type: Package
 Title: WUtilities
 Version: 0.0.1
-Author: Who wrote it
+Author: Erik Palmore <palmoeri@webster.edu>
 Maintainer: Erik Palmore <palmoeri@webster.edu>
-Description: A package of miscellaneous functions for Webster data tasks,
-License: MIT License
+Description: A package of miscellaneous functions for Webster data tasks.
 Encoding: UTF-8
 RoxygenNote: 6.0.1
+Imports: 
+        httr,
+        XML

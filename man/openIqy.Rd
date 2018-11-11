@@ -4,7 +4,7 @@
 \alias{openIqy}
 \title{Open an Informer Live Excel .iqy file}
 \usage{
-openIqy(path, param_list = NULL, build_only = FALSE)
+openIqy(path, param_list = NULL, build_only = FALSE, convert = TRUE)
 }
 \arguments{
 \item{path}{Character of the path to a Live Excel .iqy file.}
@@ -13,6 +13,8 @@ openIqy(path, param_list = NULL, build_only = FALSE)
 these fields will be prompted for in the console.}
 
 \item{build_only}{If TRUE, the function can be used as a helper app to build the param_list without executing the query.}
+
+\item{convert}{If TRUE, character columns with all digit values, and dates with all fields formatted YYYY-MM-DD will be converted to the appropriate type.}
 }
 \description{
 This function is designed to take the path to an .iqy file used with Excel.  The function can

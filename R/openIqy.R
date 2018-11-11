@@ -7,7 +7,7 @@
 #' @param param_list A named list with the run time parameters for opening the data source.  If not provided,
 #' these fields will be prompted for in the console.
 #' @param build_only If TRUE, the function can be used as a helper app to build the param_list without executing the query.
-#'
+#' @param convert If TRUE, character columns with all digit values, and dates with all fields formatted YYYY-MM-DD will be converted to the appropriate type.
 #' @return
 #' @export
 #'
@@ -15,7 +15,7 @@
 #' df <- openIqy("path/to/query.iqy)  #Will prompt for parameters if any expected
 #' params <- openIqy("path/to/query.iqy, build_only = TRUE)  ##Will return a parameter list from prompts
 #' df <- openIqy("path/to/query.iqy, params)  ##Will load using the paramters saved in list
-openIqy <- function(path, param_list = NULL, build_only = FALSE) {
+openIqy <- function(path, param_list = NULL, build_only = FALSE, convert = TRUE) {
         qurl <- .parseIqyUrl(path)
         if (is.null(param_list)) {
                 param_list <- .makeQParamList(qurl)
@@ -32,7 +32,29 @@ openIqy <- function(path, param_list = NULL, build_only = FALSE) {
         response <- httr::GET(qurl)##Get the http response
         content <- XML::htmlParse(httr::content(response, "text", encoding = "ISO-8859-1"))##Extract the content
         content <- XML::getNodeSet(content, "//table")
-        content <- XML::readHTMLTable(content[[1]])
+        content <- XML::readHTMLTable(content[[1]], stringsAsFactors = FALSE, trim = TRUE)
+        content <- na.omit(content)
+
+        ##Convert columns to numeric or date if they match these criteria
+        if(convert){
+                suppressWarnings(
+                        nums <- colnames(content)[
+                                unlist(lapply(content, function(x) all(!is.na(as.numeric(x)))))
+                                ]
+                )
+                suppressWarnings(
+                        dates <- colnames(content)[
+                                unlist(lapply(content,
+                                              function(x) all(grepl("^\\d{4}-\\d{2}-\\d{2}", x))))
+                                ]
+                )
+
+                content <- content %>%
+                        dplyr::mutate_at(vars(nums), as.numeric) %>%
+                        dplyr::mutate_at(vars(dates), as.Date)
+        }
+
+
         return(content)
 }
 

@@ -51,7 +51,6 @@ openIqy <- function(path, param_list = NULL, build_only = FALSE, convert = TRUE)
 
                 content <- dplyr::mutate_at(content, dplyr::vars(nums), as.numeric)
                 content <- dplyr::mutate_at(content, dplyr::vars(dates), as.Date)
-
         }
 
 

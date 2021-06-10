@@ -21,6 +21,7 @@ parseCanvasUrl <- function(url) {
         id_pairs <- path[[1]][grepl("/\\d*", path[[1]])]
 
         id_pairs_final <- gsub("(\\w*)/(\\d*)", "\\2", id_pairs)
+        id_pairs_final <- as.list(id_pairs_final)
         names(id_pairs_final) <- gsub("(\\w*)/(\\d*)", "\\1", id_pairs)
 
         return(id_pairs_final)

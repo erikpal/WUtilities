@@ -16,6 +16,9 @@ these fields will be prompted for in the console.}
 
 \item{convert}{If TRUE, character columns with all digit values, and dates with all fields formatted YYYY-MM-DD will be converted to the appropriate type.}
 }
+\value{
+
+}
 \description{
 This function is designed to take the path to an .iqy file used with Excel.  The function can
 be provided a named list of predifined parameters.
